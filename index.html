@@ -563,16 +563,22 @@
         }
 
         start() {
-            this.score = 0;
-            this.wave = 1;
-            this.lives = 3;
-            this.baseDestroyed = false;
-            this.loadMap();
-            this.spawnPlayer();
-            this.startWave();
-            this.state = 'playing';
-            document.getElementById('overlay').classList.add('hidden');
-            this.updateUI();
+            try {
+                this.score = 0;
+                this.wave = 1;
+                this.lives = 3;
+                this.baseDestroyed = false;
+                this.loadMap();
+                this.spawnPlayer();
+                this.startWave();
+                this.state = 'playing';
+                document.getElementById('overlay').classList.add('hidden');
+                this.updateUI();
+                console.log('Game started!');
+            } catch(e) {
+                console.error('start() error:', e);
+                alert('游戏启动出错: ' + e.message);
+            }
         }
 
         loadMap() {
@@ -848,7 +854,9 @@
         }
     }
 
-    const game = new Game();
+    // Expose game to global scope for onclick handlers
+    window.game = new Game();
+    console.log('Game initialized! state:', window.game.state);
     </script>
 </body>
 </html>
